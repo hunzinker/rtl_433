@@ -102,6 +102,16 @@ static int honeywell_decode(r_device *decoder, bitbuffer_t *bitbuffer)
     battery_low = (event & 0x08) >> 3;
     heartbeat   = (event & 0x04) >> 2;
 
+    if (event >= 128 && event <= 160) {
+      if ((event - 128) == 0) {
+        contact = (event & 0x80) >> 7;
+      } else {
+        contact = ((event - 128) & 0x20) >> 5;
+      }
+    } else {
+      contact = ((event & 0x04) >> 4);
+    }
+
     /* clang-format off */
     data = data_make(
             "model",        "",         DATA_STRING, "Honeywell-Security",
