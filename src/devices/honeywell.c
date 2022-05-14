@@ -104,7 +104,7 @@ static int honeywell_decode(r_device *decoder, bitbuffer_t *bitbuffer)
 
     if (event >= 128 && event <= 160) {
       if ((event - 128) == 0) {
-        contact = (event & 0x80) >> 7;
+        contact = ((event - 128) & 0x80) >> 7;
       } else {
         contact = ((event - 128) & 0x20) >> 5;
       }
